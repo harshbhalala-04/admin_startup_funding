@@ -1,9 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:admin_startupfunding/admin_request_screen.dart';
+import 'package:admin_startupfunding/controllers/admin_auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AdminLoginScreen extends StatelessWidget {
+class AdminLoginScreen extends GetWidget<AdminAuthController> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final String title = "Admin";
+  final authController = Get.put(AdminAuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,20 +55,19 @@ class AdminLoginScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 labelText: 'Email Address',
                               ),
-                              // controller: _emailController,
+                              controller: _emailController,
                             ),
                             TextFormField(
-                              // obscureText: controller.isPassVisible.value,
+                              obscureText: controller.isPassVisible.value,
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 suffixIcon: InkWell(
                                     onTap: () {
-                                      // controller
-                                      //     .toggolePasswordVisibility();
+                                      controller.toggolePasswordVisibility();
                                     },
                                     child: Icon(Icons.visibility)),
                               ),
-                              // controller: _passwordController,
+                              controller: _passwordController,
                             ),
 
                             // Obx(() => controller.isLogin.value
@@ -93,12 +97,8 @@ class AdminLoginScreen extends StatelessWidget {
                               width: 150,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Get.to(AdminRequestScreen());
-                                  // controller.login(
-                                  //     _emailController.text.trim(),
-                                  //     _passwordController.text
-                                  //         .trim(),
-                                  //     title);
+                                  controller.login(_emailController.text.trim(),
+                                      _passwordController.text.trim(), title);
                                 },
                                 child: Text(
                                   'Login',

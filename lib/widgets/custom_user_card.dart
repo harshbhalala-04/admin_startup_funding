@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
+import 'package:admin_startupfunding/model/startup_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CustomUserCard extends StatelessWidget {
-  // final String iconImage;
-  // final String title;
-  // CustomUserCard({required this.iconImage, required this.title});
+  final String uid;
+  final String name;
+  CustomUserCard({required this.uid, required this.name});
 
-  // // Ahiya je je vastu levani hoy e add kari dejo
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +25,7 @@ class CustomUserCard extends StatelessWidget {
                 image: AssetImage("assets/appbar_logo.png"),
               ),
               title: Text(
-                "User (Startup/Investor) Name",
+                name,
                 style: TextStyle(
                   fontFamily: "Cabin",
                   fontSize: 12,

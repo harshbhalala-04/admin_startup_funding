@@ -1,11 +1,48 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:admin_startupfunding/widgets/custom_user_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:admin_startupfunding/model/startup_model.dart';
 import 'package:get/get.dart';
 
-class AdminApprovedRequestScreen extends StatelessWidget {
-  const AdminApprovedRequestScreen({Key? key}) : super(key: key);
+class AdminApprovedRequestScreen extends StatefulWidget {
+  StartupModel? startup;
+  late final bool fromReq;
+  String? uid;
+
+  @override
+  State<AdminApprovedRequestScreen> createState() =>
+      _AdminApprovedRequestScreenState();
+}
+
+class _AdminApprovedRequestScreenState
+    extends State<AdminApprovedRequestScreen> {
+  bool isLoading = false;
+  fetchStartupDetails(String uid) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await FirebaseFirestore.instance
+        .collection("Startups")
+        .doc(uid)
+        .get()
+        .then((val) {
+      widget.startup = StartupModel.fromJson(val.data()!);
+    });
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +108,13 @@ class AdminApprovedRequestScreen extends StatelessWidget {
           // itemCount: Get.find<StartupRequestController>().inviteSentList.length,
           itemCount: 5,
           itemBuilder: (context, index) {
-            return InkWell(onTap: () {}, child: CustomUserCard());
+            return InkWell(
+                // onTap: () {},
+                // child: CustomUserCard(
+                //   name: Text(widget.startup!.startupName!.toString()),
+                //   uid: '',
+                // )
+                );
           },
         ),
       ]),

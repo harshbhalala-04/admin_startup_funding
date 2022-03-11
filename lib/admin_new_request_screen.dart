@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:admin_startupfunding/widgets/custom_user_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AdminNewRequestScreen extends StatelessWidget {
-  const AdminNewRequestScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -64,7 +63,6 @@ class AdminNewRequestScreen extends StatelessWidget {
               ),
             ),
           ),
-          
         ),
         ListView.builder(
           shrinkWrap: true,
@@ -83,7 +81,8 @@ class AdminNewRequestScreen extends StatelessWidget {
                   //   viewProfile: false,
                   // ));
                 },
-                child: CustomUserCard());
+                // child: CustomUserCard()
+                );
           },
         ),
       ]),
