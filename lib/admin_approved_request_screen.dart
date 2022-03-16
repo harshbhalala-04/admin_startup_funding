@@ -3,7 +3,9 @@
 import 'package:admin_startupfunding/homescreen_controller.dart';
 import 'package:admin_startupfunding/startup_detail_screen.dart';
 import 'package:admin_startupfunding/widgets/custom_user_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:admin_startupfunding/model/startup_model.dart';
 import 'package:get/get.dart';
 
 class AdminApprovedRequestScreen extends StatefulWidget {
