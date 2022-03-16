@@ -3,32 +3,53 @@
 import 'package:flutter/material.dart';
 
 class CustomUserCard extends StatelessWidget {
-  // final String iconImage;
-  // final String title;
-  // CustomUserCard({required this.iconImage, required this.title});
+  final String startupLogo;
+  final String startupName;
+  final String startupCEO;
 
-  // // Ahiya je je vastu levani hoy e add kari dejo
+  CustomUserCard(
+      {required this.startupLogo,
+      required this.startupName,
+      required this.startupCEO});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
-        height: 80,
+        height: 90,
         child: Card(
           elevation: 5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: Center(
             child: ListTile(
-              leading: Image(
-                image: AssetImage("assets/appbar_logo.png"),
-              ),
-              title: Text(
-                "User (Startup/Investor) Name",
-                style: TextStyle(
-                  fontFamily: "Cabin",
-                  fontSize: 12,
+              leading: CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(
+                  startupLogo,
                 ),
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    startupName,
+                    style: TextStyle(
+                      fontFamily: "Cabin",
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    startupCEO,
+                    style: TextStyle(
+                      fontFamily: "Cabin",
+                      fontSize: 16,
+                      color: Colors.grey
+                    ),
+                  ),
+                ],
               ),
               trailing: TextButton(
                   child: Icon(
@@ -43,4 +64,6 @@ class CustomUserCard extends StatelessWidget {
       ),
     );
   }
+
+  
 }

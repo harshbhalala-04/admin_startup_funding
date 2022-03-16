@@ -2,10 +2,14 @@
 
 import 'package:admin_startupfunding/admin_new_request_screen.dart';
 import 'package:admin_startupfunding/admin_approved_request_screen.dart';
+import 'package:admin_startupfunding/homescreen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AdminRequestScreen extends StatelessWidget {
+  final HomeScreenController homeScreenController =
+      Get.put(HomeScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,32 +37,36 @@ class AdminRequestScreen extends StatelessWidget {
           ),
           backgroundColor: Colors.white,
         ),
-        body: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                toolbarHeight: 0,
-                bottom: TabBar(
-                  indicatorColor: Theme.of(context).primaryColor,
-                  labelColor: Theme.of(context).primaryColor,
-                  unselectedLabelColor: Colors.black,
-                  tabs: [
-                    Tab(
-                      child: Text("New Requests"),
+        body: Obx(() => homeScreenController.isLoading.value
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : DefaultTabController(
+                length: 2,
+                child: Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.white,
+                    toolbarHeight: 0,
+                    bottom: TabBar(
+                      indicatorColor: Theme.of(context).primaryColor,
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Colors.black,
+                      tabs: [
+                        Tab(
+                          child: Text("New Requests"),
+                        ),
+                        Tab(
+                          child: Text("Approved Requests"),
+                        ),
+                      ],
                     ),
-                    Tab(
-                      child: Text("Approved Requests"),
-                    ),
-                  ],
-                ),
-              ),
-              body: TabBarView(
-                children: [
-                  AdminNewRequestScreen(),
-                  AdminApprovedRequestScreen(),
-                ],
-              ),
-            )));
+                  ),
+                  body: TabBarView(
+                    children: [
+                      AdminNewRequestScreen(),
+                      AdminApprovedRequestScreen(),
+                    ],
+                  ),
+                ))));
   }
 }

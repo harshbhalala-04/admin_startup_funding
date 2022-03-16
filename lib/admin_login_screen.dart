@@ -1,11 +1,16 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_new
 import 'package:admin_startupfunding/admin_request_screen.dart';
+import 'package:admin_startupfunding/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AdminLoginScreen extends StatelessWidget {
+class AdminLoginScreen extends GetWidget<AuthController> {
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    print("This is passsword value ${controller.isPassVisible.value}");
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -50,68 +55,50 @@ class AdminLoginScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 labelText: 'Email Address',
                               ),
-                              // controller: _emailController,
+                              controller: emailController,
                             ),
-                            TextFormField(
-                              // obscureText: controller.isPassVisible.value,
+                            Obx(() =>  TextFormField(
+                              obscureText: controller.isPassVisible.value,
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 suffixIcon: InkWell(
                                     onTap: () {
-                                      // controller
-                                      //     .toggolePasswordVisibility();
+                                      controller.toggolePasswordVisibility();
                                     },
                                     child: Icon(Icons.visibility)),
                               ),
-                              // controller: _passwordController,
-                            ),
-
-                            // Obx(() => controller.isLogin.value
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    // controller.resetPass.value =
-                                    //     !controller.resetPass.value;
-                                    // controller.isLogin.value = false;
-                                  },
-                                  child: Text(
-                                    'Forgot password?',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 12),
-                                  ),
-                                )
-                              ],
-                            ),
-
+                              controller: passwordController,
+                            ),),
                             SizedBox(
                               height: 12,
                             ),
-                            Container(
-                              width: 150,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Get.to(AdminRequestScreen());
-                                  // controller.login(
-                                  //     _emailController.text.trim(),
-                                  //     _passwordController.text
-                                  //         .trim(),
-                                  //     title);
-                                },
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                    primary: Theme.of(context).primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                    )),
-                              ),
+                            Obx(
+                              () => controller.isLoading.value
+                                  ? CircularProgressIndicator()
+                                  : Container(
+                                      width: 150,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          controller.login(
+                                            emailController.text.trim(),
+                                            passwordController.text.trim(),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Login',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Theme.of(context).primaryColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                            )),
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
