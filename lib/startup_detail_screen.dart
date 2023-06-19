@@ -43,7 +43,7 @@ class _StartupDetailScreenState extends State<StartupDetailScreen> {
         options: Options(
             responseType: ResponseType.bytes,
             followRedirects: false,
-            receiveTimeout: 0),
+        ),
       );
 
       final raf = file.openSync(mode: FileMode.write);
